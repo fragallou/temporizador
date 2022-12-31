@@ -6,6 +6,7 @@ $(document).ready(function () {
         buttonsToolbar: '#toolbar',
         showExport: true,
         showButtonText: true,
+        classes: 'table table-bordered table-hover'
     });
     let dadosArmazenados = localStorage.getItem('temp');
     if (dadosArmazenados != null || dadosArmazenados != undefined) {
@@ -91,6 +92,7 @@ var tempo = {
         this.parar();
         row.inicio = moment();
         row.fim = null;
+        row.total = null;
         this.inserir(row);
     },
 
