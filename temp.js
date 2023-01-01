@@ -15,7 +15,7 @@ $(document).ready(function () {
         })
         $table.bootstrapTable('load', JSON.parse(dadosArmazenados));
     }
-    $("#data").val(moment().format('Y-M-D'));
+    $("#data").val(moment().format('YYYY-MM-DD'));
 });
 
 var tempo = {
@@ -113,7 +113,7 @@ var formatter = {
 
 
     data: function (value, row, index) {
-        return value != null ? moment(value).format('D/M/Y') : '-';
+        return value != null ? moment(value).format('DD/MM/YYYY') : '-';
     },
 
     hora: function (value, row, index) {
