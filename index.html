@@ -8,9 +8,15 @@
     <link rel="icon" type="image/x-icon" href="favicon.png">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="node_modules/bootstrap-table/dist/bootstrap-table.min.css">
-    <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/fontawesome.min.css">
+    <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
     <style>
-        html, body{
+        * {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        html,
+        body {
             font-size: 90%;
         }
     </style>
@@ -19,7 +25,7 @@
 <body>
     <div class="container">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-            <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+            <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
                 <span class="fs-4"><b>Temporizador</b></span>
             </a>
             <ul class="nav nav-pills">
@@ -31,8 +37,8 @@
     <div class="container">
         <div class="row">
             <div class="col col-6 text-start">
-                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
-                    aria-expanded="false" aria-controls="collapseExample">
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     Novo
                 </button>
             </div>
@@ -45,11 +51,13 @@
                 <div class="row">
                     <div class="col col-2">
                         <label for="data">Data:</label>
-                        <input type="date" class="form-control" id="data" placeholder="00/00/0000" data-form="registro" disabled>
+                        <input type="date" class="form-control" id="data" placeholder="00/00/0000" data-form="registro"
+                            disabled>
                     </div>
                     <div class="col col-2">
                         <label for="projeto">Projeto:</label>
-                        <input type="text" class="form-control" id="projeto" placeholder="Ex: Agrievo" data-form="registro">
+                        <input type="text" class="form-control" id="projeto" placeholder="Ex: Agrievo"
+                            data-form="registro">
                     </div>
                     <div class="col col-8">
                         <label for="atividade">Atividade:</label>

@@ -4,9 +4,11 @@ $(document).ready(function () {
         search: true,
         searchAlign: 'right',
         buttonsToolbar: '#toolbar',
-        showExport: true,
-        showButtonText: true,
-        classes: 'table table-bordered table-hover'
+        showButtonText: false,
+        showButtonIcons: true,
+        buttonsClass: 'outline-secondary',
+        classes: 'table table-bordered table-hover',
+        buttons: buttons
     });
     let dadosArmazenados = localStorage.getItem('temp');
     if (dadosArmazenados != null || dadosArmazenados != undefined) {
@@ -100,8 +102,8 @@ var tempo = {
         localStorage.setItem('temp', JSON.stringify(dados));
     },
 
-    limpar:function(){
-        if(confirm("Esta operação é irreversível. Tem certeza que deseja limpar todos os registros?")){
+    limpar: function () {
+        if (confirm("Esta operação é irreversível. Tem certeza que deseja limpar todos os registros?")) {
             localStorage.removeItem('temp');
             location.reload();
         }
@@ -133,7 +135,7 @@ var formatter = {
         let options = "";
         if (row.fim == null) {
             options += "<a href='#' class='me-2 text-danger' onclick='tempo.parar()'>Parar</a>";
-        }else{
+        } else {
             options += "<a href='#' class='me-2 text-success' onclick='tempo.continuar(" + JSON.stringify(row) + ")'>Continuar</a>";
         }
         return options;
@@ -142,5 +144,38 @@ var formatter = {
     padLeft: function (num, size) {
         var s = "000000000" + num;
         return s.substr(s.length - size);
+    }
+}
+
+function buttons() {
+    return {
+        btnExcel: {
+            text: 'Excel',
+            icon: 'bi-file-earmark-excel-fill',
+            event: function () {
+                $table.tableExport({
+                    type: 'excel',
+                    fileName: 'Relatorio',
+                    htmlContent: false,
+                });
+            },
+            attributes: {
+                title: 'Exportar para Excel'
+            }
+        },
+        btnCSV: {
+            text: 'CSV',
+            icon: 'bi-filetype-csv',
+            event: function () {
+                $table.tableExport({
+                    type: 'csv',
+                    fileName: 'Relatorio',
+                    htmlContent: false,
+                });
+            },
+            attributes: {
+                title: 'Exportar como CSV'
+            }
+        },
     }
 }
