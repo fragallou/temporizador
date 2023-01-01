@@ -68,6 +68,17 @@ var tempo = {
     },
 
     /**
+     * Cancelar inclusão de novo registro
+     */
+    cancelar:function(){
+        if(confirm("Tem certeza que deseja cancelar a inclusão de um novo lançamento?")){
+            $("#projeto").val('');
+            $("#atividade").val('');
+            $("#collapseExample").collapse('toggle');
+        }
+    },
+
+    /**
      * Parar registro de tempo para atividade
      * @param {object} row : linha completa
      * @param {integer} index : índice da linha
