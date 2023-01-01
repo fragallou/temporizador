@@ -169,7 +169,7 @@ function buttons() {
             event: function () {
                 $table.tableExport({
                     format: 'xls',
-                    fileName: 'Relatorio',
+                    filename: 'Apontamentos',
                     htmlContent: false,
                 });
             },
@@ -183,7 +183,7 @@ function buttons() {
             event: function () {
                 $table.tableExport({
                     format: 'csv',
-                    fileName: 'Relatorio',
+                    filename: 'Apontamentos',
                     htmlContent: false,
                 });
             },
