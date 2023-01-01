@@ -70,8 +70,8 @@ var tempo = {
     /**
      * Cancelar inclusão de novo registro
      */
-    cancelar:function(){
-        if(confirm("Tem certeza que deseja cancelar a inclusão de um novo lançamento?")){
+    cancelar: function () {
+        if (confirm("Tem certeza que deseja cancelar a inclusão de um novo lançamento?")) {
             $("#projeto").val('');
             $("#atividade").val('');
             $("#collapseExample").collapse('toggle');
@@ -87,12 +87,14 @@ var tempo = {
         let dados = $table.bootstrapTable('getData');
         if (dados.length > 0) {
             let ultimo = dados[0];
-            ultimo.fim = ultimo.fim == null ? moment() : ultimo.fim;
-            let inicio = ultimo.inicio;
-            let fim = ultimo.fim;
-            let duracao = moment.duration(fim.diff(inicio));
-            ultimo.total = ("00" + duracao._data.hours).slice(-2) + ":" + ("00" + duracao._data.minutes).slice(-2);
-            this.atualizar(ultimo, 0);
+            if (ultimo.fim == null) {
+                ultimo.fim = moment();
+                let inicio = ultimo.inicio;
+                let fim = ultimo.fim;
+                let duracao = moment.duration(fim.diff(inicio));
+                ultimo.total = ("00" + duracao._data.hours).slice(-2) + ":" + ("00" + duracao._data.minutes).slice(-2);
+                this.atualizar(ultimo, 0);
+            }
         }
     },
 
