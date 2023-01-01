@@ -6,7 +6,7 @@ $(document).ready(function () {
         buttonsToolbar: '#toolbar',
         showButtonText: false,
         showButtonIcons: true,
-        buttonsClass: 'outline-secondary',
+        buttonsClass: 'light',
         classes: 'table table-bordered table-hover',
         buttons: buttons
     });
