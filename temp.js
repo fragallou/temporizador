@@ -89,7 +89,6 @@ var tempo = {
      * @param {integer} index : índice da linha
      */
     continuar: function (row, index) {
-        this.parar();
         row.inicio = moment();
         row.fim = null;
         row.total = null;
