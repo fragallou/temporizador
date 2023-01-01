@@ -76,7 +76,7 @@ var tempo = {
         let dados = $table.bootstrapTable('getData');
         if (dados.length > 0) {
             let ultimo = dados[0];
-            ultimo.fim = moment();
+            ultimo.fim = ultimo.fim == null ? moment() : ultimo.fim;
             let inicio = ultimo.inicio;
             let fim = ultimo.fim;
             let duracao = moment.duration(fim.diff(inicio));
@@ -91,6 +91,7 @@ var tempo = {
      * @param {integer} index : índice da linha
      */
     continuar: function (row, index) {
+        this.parar();
         row.inicio = moment();
         row.fim = null;
         row.total = null;
@@ -154,7 +155,7 @@ function buttons() {
             icon: 'bi-file-earmark-excel-fill',
             event: function () {
                 $table.tableExport({
-                    type: 'excel',
+                    format: 'xls',
                     fileName: 'Relatorio',
                     htmlContent: false,
                 });
@@ -168,7 +169,7 @@ function buttons() {
             icon: 'bi-filetype-csv',
             event: function () {
                 $table.tableExport({
-                    type: 'csv',
+                    format: 'csv',
                     fileName: 'Relatorio',
                     htmlContent: false,
                 });
