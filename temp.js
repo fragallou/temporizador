@@ -105,6 +105,7 @@ var tempo = {
      */
     continuar: function (row, index) {
         this.parar();
+        row.data = moment().format('YYYY-MM-DD');
         row.inicio = moment();
         row.fim = null;
         row.total = null;
