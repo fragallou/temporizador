@@ -153,7 +153,7 @@ var formatter = {
         if (row.fim == null) {
             options += "<a href='#' class='me-2 text-danger' onclick='tempo.parar()'>Parar</a>";
         } else {
-            options += "<a href='#' class='me-2 text-success' onclick='tempo.continuar(" + JSON.stringify(row) + ")'>Continuar</a>";
+            options += "<a href='#' class='me-2 text-primary' onclick='tempo.continuar(" + JSON.stringify(row) + ")'>Continuar</a>";
         }
         return options;
     },
