@@ -8,7 +8,9 @@ $(document).ready(function () {
         showButtonIcons: true,
         buttonsClass: 'light',
         classes: 'table table-bordered table-hover',
-        buttons: buttons
+        buttons: buttons,
+        pagination: true,
+        pageSize: 15
     });
     let dadosArmazenados = localStorage.getItem('temp');
     if (dadosArmazenados != null || dadosArmazenados != undefined) {
