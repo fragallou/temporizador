@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
     <link rel="icon" type="image/x-icon" href="favicon.png">
+    <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="node_modules/bootstrap-table/dist/bootstrap-table.min.css">
     <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
@@ -29,7 +30,8 @@
                 <span class="fs-4"><b>Temporizador</b></span>
             </a>
             <ul class="nav nav-pills">
-                <li class="nav-item"><a href="mailto:fragallo.uilian@icloud.com?&subject=Suporte" class="nav-link">Suporte</a></li>
+                <li class="nav-item"><a href="mailto:fragallo.uilian@icloud.com?&subject=Suporte"
+                        class="nav-link">Suporte</a></li>
                 <li class="nav-item"><a href="#" onclick="tempo.limpar()" class="nav-link">Limpar</a></li>
             </ul>
         </header>
@@ -37,7 +39,8 @@
     <div class="container">
         <div class="row">
             <div class="col col-6 text-start">
-                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                     Novo
                 </button>
             </div>
@@ -69,9 +72,10 @@
                             </button>
                         </div>
                         <div class="col col-1">
-                            <button class="btn btn-outline-secondary" type="button" id="cancelar" onclick="tempo.cancelar();">
+                            <button class="btn btn-outline-secondary" type="button" id="cancelar"
+                                onclick="tempo.cancelar();">
                                 Cancelar
-                            </button>                           
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -106,6 +110,53 @@
             </ul>
         </footer>
     </div>
+
+    <!-- Modal para Edição de Lançamento-->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="editModalLabel">Editar Lançamento</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="mb-3 col col-3">
+                            <label for="edicao_data">Data:</label>
+                            <input type="date" class="form-control" id="edicao_data" placeholder="00/00/0000"
+                                data-form="edicao">
+                        </div>
+                        <div class="mb-3 col col-5">
+                            <label for="edicao_projeto">Projeto:</label>
+                            <input type="text" class="form-control" id="edicao_projeto" placeholder="Ex: Agrievo"
+                                data-form="edicao">
+                        </div>
+                        <div class="mb-3 col col-2">
+                            <label for="edicao_inicio">Início:</label>
+                            <input type="text" class="form-control" id="edicao_inicio" placeholder="00:00"
+                                data-form="edicao">
+                        </div>
+                        <div class="mb-3 col col-2">
+                            <label for="edicao_fim">Fim:</label>
+                            <input type="text" class="form-control" id="edicao_fim" placeholder="00:00"
+                                data-form="edicao">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-2 col col-12">
+                            <label for="edicao_atividade">Atividade:</label>
+                            <input type="text" class="form-control" id="edicao_atividade" data-form="edicao">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary">Atualizar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="node_modules/bootstrap-table/dist/bootstrap-table.min.js"></script>
