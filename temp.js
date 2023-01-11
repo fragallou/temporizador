@@ -1,4 +1,5 @@
 var $table = $("#table").bootstrapTable();
+var lineIndex = 0;
 $(document).ready(function () {
     $table.bootstrapTable('refreshOptions', {
         search: true,
@@ -96,11 +97,21 @@ var tempo = {
                 ultimo.fim = moment();
                 let inicio = ultimo.inicio;
                 let fim = ultimo.fim;
-                let duracao = moment.duration(fim.diff(inicio));
+                let duracao = this.calcularTotal(inicio, fim);
                 ultimo.total = ("00" + duracao._data.hours).slice(-2) + ":" + ("00" + duracao._data.minutes).slice(-2);
                 this.atualizar(ultimo, 0);
             }
         }
+    },
+
+    /**
+     * Calcula o tempo de atividade
+     * @param {time} inicio : horário de início
+     * @param {time} fim : horário de fim
+     * @returns duration : duração da atividade
+     */
+    calcularTotal: function (inicio, fim) {
+        return moment.duration(fim.diff(inicio));
     },
 
     /**
@@ -141,6 +152,7 @@ var tempo = {
      * @param {integer} index : índice da linha na tabela
      */
     editar: function (row, index) {
+        lineIndex = index;
         $("#editModal").modal('show');
         $("#edicao_data").val(moment(row.data).format('YYYY-MM-DD'));
         $("#edicao_projeto").val(row.projeto)
@@ -160,7 +172,9 @@ var tempo = {
             fim: $("#edicao_fim").val(),
             atividade: $("#edicao_atividade").val(),
         }
-        this.atualizar(obj, index);
+        let duracao = this.calcularTotal(obj.inicio, obj.fim);
+        obj.total = ("00" + duracao._data.hours).slice(-2) + ":" + ("00" + duracao._data.minutes).slice(-2);
+        this.atualizar(obj, lineIndex);
     }
 }
 
