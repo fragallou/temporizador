@@ -260,10 +260,10 @@ var formatter = {
     acoes: function (value, row, index) {
         let options = "";
         if (row.fim == null) {
-            options += "<a href='#' class='me-2 text-danger' onclick='tempo.parar()' title='Parar'><i class='fas fa-circle-stop me-2'></i></a>";
+            options += "<a href='#' class='me-2 text-danger' onclick='tempo.parar()' title='Parar'><i class='fas fa-circle-stop'></i></a>";
         } else {
-            options += "<a href='#' class='me-2 text-success' onclick='tempo.continuar(" + JSON.stringify(row) + ")' title='Continuar'><i class='fas fa-circle-play me-2'></i></a>";
-            options += "<a href='#' class='me-2 text-primary' onclick='tempo.editar(" + JSON.stringify(row) + "," + index + ")' title='Editar'><i class='fas fa-square-pen me-2'></i></a>";
+            options += "<a href='#' class='me-2 text-success' onclick='tempo.continuar(" + JSON.stringify(row) + ")' title='Continuar'><i class='fas fa-circle-play'></i></a>";
+            options += "<a href='#' class='me-2 text-secondary' onclick='tempo.editar(" + JSON.stringify(row) + "," + index + ")' title='Editar'><i class='fas fa-pen-to-square'></i></a>";
         }
         return options;
     },
