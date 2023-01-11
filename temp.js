@@ -115,6 +115,7 @@ var tempo = {
                 let inicio = ultimo.inicio;
                 let fim = ultimo.fim;
                 let duracao = this.calcularTotal(inicio, fim);
+                console.log(moment.duration(duracao).asHours());
                 ultimo.total = ("00" + duracao._data.hours).slice(-2) + ":" + ("00" + duracao._data.minutes).slice(-2);
                 this.atualizar(ultimo, 0);
             }
