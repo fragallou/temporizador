@@ -115,7 +115,8 @@ var tempo = {
                 let inicio = ultimo.inicio;
                 let fim = ultimo.fim;
                 let duracao = this.calcularTotal(inicio, fim);
-                console.log(moment.duration(duracao).asHours());
+                let total = moment.duration(duracao).asHours();
+                ultimo.decimal = fn.horasDecimais(total);
                 ultimo.total = ("00" + duracao._data.hours).slice(-2) + ":" + ("00" + duracao._data.minutes).slice(-2);
                 this.atualizar(ultimo, 0);
             }
@@ -171,7 +172,7 @@ var tempo = {
             },
         }).then((value) => {
             switch (value) {
-                case "defeat":
+                case true:
                     localStorage.removeItem('temp');
                     location.reload();
                     break;
@@ -207,9 +208,37 @@ var tempo = {
             fim: $("#edicao_fim").val(),
             atividade: $("#edicao_atividade").val(),
         }
+        let inicio = {
+            valorInformado: $("#edicao_inicio").val(),
+            inMoment: function () {
+                let valor = this.valorInformado.split(":");
+                let hh = moment().set('hour', valor[0]);
+                let mm = hh.set('minutes', valor[1]);
+                let hora = mm;
+                return hora;
+            }
+        }
+        let fim = {
+            valorInformado: $("#edicao_fim").val(),
+            inMoment: function () {
+                let valor = this.valorInformado.split(":");
+                let hh = moment().set('hour', valor[0]);
+                let mm = hh.set('minutes', valor[1]);
+                let hora = mm;
+                return hora;
+            }
+        }
+
+        obj.inicio = inicio.inMoment();
+        obj.fim = fim.inMoment();
         let duracao = this.calcularTotal(obj.inicio, obj.fim);
         obj.total = ("00" + duracao._data.hours).slice(-2) + ":" + ("00" + duracao._data.minutes).slice(-2);
         this.atualizar(obj, lineIndex);
+        $("#editModal").modal('hide');
+        swal('Pronto!', 'Registro atualizado com sucesso!', 'success', {
+            buttons: false,
+            timer: 2000,
+        });
     }
 }
 
@@ -267,17 +296,6 @@ var formatter = {
         }
         return options;
     },
-
-    /**
-     * Formata número com zeros à esquerda
-     * @param {integer} num : valor a ser formatado
-     * @param {integer} size : número de zeros à esquerda
-     * @returns string
-     */
-    padLeft: function (num, size) {
-        var s = "000000000" + num;
-        return s.substr(s.length - size);
-    }
 }
 
 /**
@@ -290,11 +308,13 @@ function buttons() {
             text: 'Excel',
             icon: 'bi-file-earmark-excel-fill',
             event: function () {
+                $table.bootstrapTable('showColumn', 'decimal');
                 $table.tableExport({
                     format: 'xls',
                     filename: 'Apontamentos',
                     htmlContent: false,
                 });
+                $table.bootstrapTable('hideColumn', 'decimal');
             },
             attributes: {
                 title: 'Exportar para Excel'
@@ -304,15 +324,46 @@ function buttons() {
             text: 'CSV',
             icon: 'bi-filetype-csv',
             event: function () {
+                $table.bootstrapTable('showColumn', 'decimal');
+                $table.bootstrapTable('hideColumn', 'acoes');
                 $table.tableExport({
                     format: 'csv',
                     filename: 'Apontamentos',
                     htmlContent: false,
                 });
+                $table.bootstrapTable('hideColumn', 'decimal');
+                $table.bootstrapTable('showColumn', 'acoes');
             },
             attributes: {
                 title: 'Exportar como CSV'
             }
         },
+    }
+}
+
+/**
+ * Funções gerais
+ */
+var fn = {
+    horasDecimais(hora) {
+        var decimal = hora.toFixed(2);
+        var splitTime = decimal.toString().split('.');
+        var h = splitTime[0];
+        var m = splitTime[1];
+        var round = null;
+        if (m > 0 && m < 25) {
+            round = '00';
+        } else if (m >= 25 && m <= 50) {
+            round = '25';
+        } else if (m >= 50 && m <= 74) {
+            round = '75';
+        } else if (m >= 75) {
+            h++;
+            round = '00';
+        }
+        splitTime[0] = h;
+        splitTime[1] = ("00" + round).slice(-2);
+        let newTime = splitTime.join(',');
+        return newTime;
     }
 }
