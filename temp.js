@@ -232,6 +232,8 @@ var tempo = {
         obj.inicio = inicio.inMoment();
         obj.fim = fim.inMoment();
         let duracao = this.calcularTotal(obj.inicio, obj.fim);
+        let total = moment.duration(duracao).asHours();
+        obj.decimal = fn.horasDecimais(total);
         obj.total = ("00" + duracao._data.hours).slice(-2) + ":" + ("00" + duracao._data.minutes).slice(-2);
         this.atualizar(obj, lineIndex);
         $("#editModal").modal('hide');
