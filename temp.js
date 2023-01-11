@@ -77,11 +77,28 @@ var tempo = {
      * Cancelar inclusão de novo registro
      */
     cancelar: function () {
-        if (confirm("Tem certeza que deseja cancelar a inclusão de um novo lançamento?")) {
-            $("#projeto").val('');
-            $("#atividade").val('');
-            $("#collapseExample").collapse('toggle');
-        }
+        swal("Atenção!", "Deseja mesmo cancelar a inclusão de um novo registro?", "warning", {
+            dangerMode: true,
+            buttons: {
+                cancel: "Não",
+                confirm: {
+                    text: "Sim",
+                    value: true,
+                    visible: true,
+                    closeModal: true,
+                },
+            },
+        }).then((value) => {
+            switch (value) {
+                case true:
+                    $("#projeto").val('');
+                    $("#atividade").val('');
+                    $("#collapseExample").collapse('toggle');
+                    break;
+                default:
+                    swal.close();
+            }
+        });
     },
 
     /**
@@ -140,10 +157,27 @@ var tempo = {
      * Eliminar todos os registros disponíveis
      */
     limpar: function () {
-        if (confirm("Esta operação é irreversível. Tem certeza que deseja limpar todos os registros?")) {
-            localStorage.removeItem('temp');
-            location.reload();
-        }
+        swal("Atenção!", "Deseja realmente remover todos os lançamentos?\nEsta operação é irreversível.", "warning", {
+            dangerMode: true,
+            buttons: {
+                cancel: "Cancelar",
+                confirm: {
+                    text: "Confirmar",
+                    value: true,
+                    visible: true,
+                    closeModal: true,
+                },
+            },
+        }).then((value) => {
+            switch (value) {
+                case "defeat":
+                    localStorage.removeItem('temp');
+                    location.reload();
+                    break;
+                default:
+                    swal.close();
+            }
+        });
     },
 
     /**
