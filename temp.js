@@ -1,6 +1,12 @@
 var $table = $("#table").bootstrapTable();
 var lineIndex = 0;
 $(document).ready(function () {
+
+    // Máscara de campos
+    $("input[id*='inicio']").mask('00:00');
+    $("input[id*='fim']").mask('00:00');
+
+    // Instancia Tabela
     $table.bootstrapTable('refreshOptions', {
         search: true,
         searchAlign: 'right',
@@ -61,7 +67,7 @@ var tempo = {
     adicionar: function () {
         var registro = {
             data: moment($("#data").val()),
-            inicio: moment(),
+            inicio: $("#inicio").val() == '' ? moment() : this.toMoment($("#inicio").val()),
             fim: null,
             total: null,
             projeto: $("#projeto").val(),
