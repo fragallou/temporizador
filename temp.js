@@ -204,33 +204,10 @@ var tempo = {
         let obj = {
             data: $("#edicao_data").val(),
             projeto: $("#edicao_projeto").val(),
-            inicio: $("#edicao_inicio").val(),
-            fim: $("#edicao_fim").val(),
+            inicio: this.toMoment($("#edicao_inicio").val()),
+            fim: this.toMoment($("#edicao_fim").val()),
             atividade: $("#edicao_atividade").val(),
         }
-        let inicio = {
-            valorInformado: $("#edicao_inicio").val(),
-            inMoment: function () {
-                let valor = this.valorInformado.split(":");
-                let hh = moment().set('hour', valor[0]);
-                let mm = hh.set('minutes', valor[1]);
-                let hora = mm;
-                return hora;
-            }
-        }
-        let fim = {
-            valorInformado: $("#edicao_fim").val(),
-            inMoment: function () {
-                let valor = this.valorInformado.split(":");
-                let hh = moment().set('hour', valor[0]);
-                let mm = hh.set('minutes', valor[1]);
-                let hora = mm;
-                return hora;
-            }
-        }
-
-        obj.inicio = inicio.inMoment();
-        obj.fim = fim.inMoment();
         let duracao = this.calcularTotal(obj.inicio, obj.fim);
         let total = moment.duration(duracao).asHours();
         obj.decimal = fn.horasDecimais(total);
@@ -241,6 +218,50 @@ var tempo = {
             buttons: false,
             timer: 2000,
         });
+    },
+
+    /**
+     * Remover lançamento da tabela
+     * @param {integer} index : índice da linha a ser eremovida
+     */
+    remover: function (index) {
+        swal("Atenção!", "Deseja realmente remover este apontamento?\nEsta operação é irreversível.", "warning", {
+            dangerMode: true,
+            buttons: {
+                cancel: "Cancelar",
+                confirm: {
+                    text: "Remover",
+                    value: true,
+                    visible: true,
+                    closeModal: true,
+                },
+            },
+        }).then((value) => {
+            switch (value) {
+                case true:
+                    $table.bootstrapTable('remove', {
+                        field: '$index',
+                        values: [index]
+                    });
+                    this.armazenar();
+                    break;
+                default:
+                    swal.close();
+            }
+        });
+    },
+
+    /**
+     * Converte hora
+     * @param {time} hora : converte hora para o formato Moment
+     * @returns moment ; valor convertido para Moment JS
+     */
+    toMoment(hora) {
+        let valor = hora.split(":");
+        let hh = moment().set('hour', valor[0]);
+        let mm = hh.set('minutes', valor[1]);
+        var hora = mm;
+        return hora;
     }
 }
 
@@ -291,10 +312,11 @@ var formatter = {
     acoes: function (value, row, index) {
         let options = "";
         if (row.fim == null) {
-            options += "<a href='#' class='me-2 text-danger' onclick='tempo.parar()' title='Parar'><i class='fas fa-circle-stop'></i></a>";
+            options += "<a href='#' class='me-3 text-danger' onclick='tempo.parar()' title='Parar'><i class='fas fa-circle-stop'></i></a>";
         } else {
-            options += "<a href='#' class='me-2 text-success' onclick='tempo.continuar(" + JSON.stringify(row) + ")' title='Continuar'><i class='fas fa-circle-play'></i></a>";
-            options += "<a href='#' class='me-2 text-secondary' onclick='tempo.editar(" + JSON.stringify(row) + "," + index + ")' title='Editar'><i class='fas fa-pen-to-square'></i></a>";
+            options += "<a href='#' class='me-3 text-success' onclick='tempo.continuar(" + JSON.stringify(row) + ")' title='Continuar'><i class='fas fa-circle-play'></i></a>";
+            options += "<a href='#' class='me-3 text-secondary' onclick='tempo.editar(" + JSON.stringify(row) + "," + index + ")' title='Editar'><i class='fas fa-pen-to-square'></i></a>";
+            options += "<a href='#' class='me-3 text-danger' onclick='tempo.remover(" + index + ")' title='Remover'><i class='fas fa-trash-alt'></i></a>";
         }
         return options;
     },
