@@ -369,19 +369,23 @@ function buttons() {
  * Funções gerais
  */
 var fn = {
+
+    /**
+     * Arredonda horários com divisão de 30 minutos
+     * @param {time} hora : horário
+     * @returns time round
+     */
     horasDecimais(hora) {
         var decimal = hora.toFixed(2);
         var splitTime = decimal.toString().split('.');
         var h = splitTime[0];
         var m = splitTime[1];
         var round = null;
-        if (m > 0 && m < 25) {
+        if (m > 0 && m < 10) {
             round = '00';
-        } else if (m >= 25 && m <= 50) {
-            round = '25';
-        } else if (m >= 50 && m <= 74) {
-            round = '75';
-        } else if (m >= 75) {
+        } else if (m >= 11 && m <= 65) {
+            round = '50';
+        } else if (m >= 66) {
             h++;
             round = '00';
         }
