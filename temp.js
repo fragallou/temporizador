@@ -26,13 +26,20 @@ $(document).ready(function () {
         })
         $table.bootstrapTable('load', JSON.parse(dadosArmazenados));
     }
-    $("#data").val(moment().format('YYYY-MM-DD'));
 });
 
 /**
  * LANÇAMENTOS
  */
 var tempo = {
+
+    /**
+     * Iniciar novo registro
+     */
+    novo: function(){
+        $("#data").val(moment().format('YYYY-MM-DD'));
+        $("#inicio").val(moment().format('HH:mm'));
+    },
 
     /**
      * Inserir novo registro na tabela
@@ -97,6 +104,8 @@ var tempo = {
         }).then((value) => {
             switch (value) {
                 case true:
+                    $("#data").val('');
+                    $("#inicio").val('');
                     $("#projeto").val('');
                     $("#atividade").val('');
                     $("#collapseExample").collapse('toggle');
