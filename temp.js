@@ -27,11 +27,11 @@ $(document).ready(function () {
         $table.bootstrapTable('load', JSON.parse(dadosArmazenados));
     }
 
-    $( 'select' ).select2( {
+    $('select').select2({
         theme: "bootstrap-5",
-        width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
+        width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
         placeholder: 'Selecione',
-    } );
+    });
 
     $("#projeto").val('');
 });
@@ -372,6 +372,7 @@ function buttons() {
             text: 'CSV',
             icon: 'bi-filetype-csv',
             event: function () {
+                $table.bootstrapTable('refreshOptions', { pagination: false });
                 $table.bootstrapTable('showColumn', 'decimal');
                 $table.bootstrapTable('hideColumn', 'acoes');
                 $table.tableExport({
@@ -381,6 +382,7 @@ function buttons() {
                 });
                 $table.bootstrapTable('hideColumn', 'decimal');
                 $table.bootstrapTable('showColumn', 'acoes');
+                $table.bootstrapTable('refreshOptions', { pagination: true });
             },
             attributes: {
                 title: 'Exportar como CSV'
