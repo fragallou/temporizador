@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="node_modules/bootstrap-table/dist/bootstrap-table.min.css">
     <link rel="stylesheet" href="node_modules/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="node_modules/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" href="node_modules/select2-bootstrap-5-theme/dist/select2-bootstrap-5-theme.min.css">
     <style>
         * {
             -webkit-font-smoothing: antialiased;
@@ -143,8 +145,12 @@
                         </div>
                         <div class="mb-3 col col-5">
                             <label for="edicao_projeto">Projeto:</label>
-                            <input type="text" class="form-control" id="edicao_projeto" placeholder="Ex: Agrievo"
-                                data-form="edicao">
+                            <select class="form-control" id="edicao_projeto" placeholder="Ex: Agrievo" data-form="edicao">
+                                <option value="Agrievo">Agrievo</option>
+                                <option value="Cargill">Cargill</option>
+                                <option value="Esatto">Esatto</option>
+                                <option value="MaisDoc">MaisDoc</option>
+                            </select>
                         </div>
                         <div class="mb-3 col col-2">
                             <label for="edicao_inicio">Início:</label>
@@ -180,6 +186,7 @@
     <script src="node_modules/jquery-tableexport/dist/tableExport.min.js"></script>
     <script src="node_modules/sweetalert/dist/sweetalert.min.js"></script>
     <script src="node_modules/jquery-mask-plugin/dist/jquery.mask.min.js"></script>
+    <script src="node_modules/select2/dist/js/select2.full.min.js"></script>
     <script src="node_modules/moment/moment.js"></script>
     <script src="temp.js"></script>
 </body>
