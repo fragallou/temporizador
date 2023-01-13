@@ -217,7 +217,8 @@ var tempo = {
         $("#edicao_projeto").val(row.projeto)
         $("#edicao_inicio").val(moment(row.inicio).format('HH:mm'))
         $("#edicao_fim").val(moment(row.fim).format("HH:mm"));
-        $("#edicao_atividade").val(row.atividade)
+        $("#edicao_atividade").val(row.atividade);
+        $('#edicao_projeto').trigger('change');
     },
 
     /**
