@@ -26,6 +26,7 @@ $(document).ready(function () {
         })
         $table.bootstrapTable('load', JSON.parse(dadosArmazenados));
     }
+    $("#projeto").val('');
 });
 
 /**
@@ -36,7 +37,7 @@ var tempo = {
     /**
      * Iniciar novo registro
      */
-    novo: function(){
+    novo: function () {
         $("#data").val(moment().format('YYYY-MM-DD'));
         $("#inicio").val(moment().format('HH:mm'));
     },
@@ -277,7 +278,7 @@ var tempo = {
         let mm = hh.set('minutes', valor[1]);
         var hora = mm;
         return hora;
-    }
+    },
 }
 
 /**
