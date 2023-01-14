@@ -240,7 +240,7 @@ var tempo = {
         fn.setFieldVal('edicao_inicio', moment(row.inicio).format('HH:mm'));
         fn.setFieldVal('edicao_fim', moment(row.fim).format('HH:mm'));
         fn.setFieldVal('edicao_projeto', row.projeto);
-        fn.setFieldVal('edicao_agrupamento', row.agrupamento);
+        fn.setFieldVal('edicao_classe', row.classe);
         fn.setFieldVal('edicao_atividade', row.atividade);
         $("#editModal").modal('show');
     },
@@ -257,7 +257,7 @@ var tempo = {
                 inicio: this.toMoment(formData.edicao_inicio),
                 fim: this.toMoment(formData.edicao_fim),
                 projeto: formData.edicao_projeto,
-                agrupamento: formData.edicao_agrupamento,
+                classe: formData.edicao_classe,
                 atividade: formData.edicao_atividade,
             }
             if (fn.maxDate(registro.data)) {
