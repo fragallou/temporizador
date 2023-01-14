@@ -96,7 +96,7 @@ var tempo = {
                 if (registro.inicio != null && registro.fim != null) {
                     let duracao = this.calcularTotal(registro.inicio, registro.fim);
                     let total = moment.duration(duracao).asHours();
-                    registro.decimal = fn.horasDecimais(total);
+                    registro.horas = fn.horasDecimais(total);
                     registro.total = ("00" + duracao._data.hours).slice(-2) + ":" + ("00" + duracao._data.minutes).slice(-2);
                 }
                 fn.clearForm(form)
@@ -163,7 +163,7 @@ var tempo = {
                 let fim = ultimo.fim;
                 let duracao = this.calcularTotal(inicio, fim);
                 let total = moment.duration(duracao).asHours();
-                ultimo.decimal = fn.horasDecimais(total);
+                ultimo.horas = fn.horasDecimais(total);
                 ultimo.total = ("00" + duracao._data.hours).slice(-2) + ":" + ("00" + duracao._data.minutes).slice(-2);
                 this.atualizar(ultimo, 0);
             }
@@ -263,7 +263,7 @@ var tempo = {
             if (fn.maxDate(registro.data)) {
                 let duracao = this.calcularTotal(registro.inicio, registro.fim);
                 let total = moment.duration(duracao).asHours();
-                registro.decimal = fn.horasDecimais(total);
+                registro.horas = fn.horasDecimais(total);
                 registro.total = ("00" + duracao._data.hours).slice(-2) + ":" + ("00" + duracao._data.minutes).slice(-2);
                 fn.clearForm(form);
                 this.atualizar(registro, lineIndex);
@@ -412,14 +412,14 @@ function buttons() {
             icon: 'bi-filetype-csv',
             event: function () {
                 $table.bootstrapTable('refreshOptions', { pagination: false });
-                $table.bootstrapTable('showColumn', 'decimal');
+                $table.bootstrapTable('showColumn', 'horas');
                 $table.bootstrapTable('hideColumn', 'acoes');
                 $table.tableExport({
                     format: 'csv',
                     filename: 'Apontamentos',
                     htmlContent: false,
                 });
-                $table.bootstrapTable('hideColumn', 'decimal');
+                $table.bootstrapTable('hideColumn', 'horas');
                 $table.bootstrapTable('showColumn', 'acoes');
                 $table.bootstrapTable('refreshOptions', { pagination: true });
             },
