@@ -2,6 +2,13 @@ var $table = $("#table").bootstrapTable();
 var lineIndex = 0;
 $(document).ready(function () {
 
+    /**
+ * Adiciona um asterisco (*) à todos os campos obrigatórios da tela
+ */
+    $('[required]').each(function () {
+        $("label[for='" + $(this).attr('id') + "']").append('<span class="text-danger ml-1 lb-obg"> *</span>')
+    })
+
     // Máscara de campos
     $("input[id*='inicio']").mask('00:00');
     $("input[id*='fim']").mask('00:00');
@@ -80,25 +87,38 @@ var tempo = {
      * Adicionar registro e iniciar contador
      */
     adicionar: function () {
-        var registro = {
-            data: moment($("#data").val()),
-            inicio: $("#inicio").val() == '' ? moment() : this.toMoment($("#inicio").val()),
-            fim: null,
-            total: null,
-            projeto: $("#projeto").val(),
-            atividade: $("#atividade").val(),
+        let form = 'registro'
+        let registro = fn.getFormData(form);
+        if (fn.validateForm(form)) {
+            if (fn.maxDate(registro.data)) {
+                registro.inicio = registro.inicio == null ? moment() : this.toMoment(registro.inicio);
+                registro.fim = registro.fim != null ? this.toMoment(registro.fim) : null;
+                if (registro.inicio != null && registro.fim != null) {
+                    let duracao = this.calcularTotal(registro.inicio, registro.fim);
+                    let total = moment.duration(duracao).asHours();
+                    registro.decimal = fn.horasDecimais(total);
+                    registro.total = ("00" + duracao._data.hours).slice(-2) + ":" + ("00" + duracao._data.minutes).slice(-2);
+                }
+                fn.clearForm(form)
+                this.parar();
+                this.inserir(registro);
+                $("#collapseExample").collapse('toggle');
+            } else {
+                swal('Atenção!', 'A data de apontamento não pode ser superior à data atual.', 'warning');
+                fn.setFieldVal('data', '');
+                return false;
+            }
+        } else {
+            swal('Ops!', 'Um ou mais campos obrigatórios não foram preenchidos.', 'error');
+            return false;
         }
-        $("#atividade").val('');
-        this.parar();
-        this.inserir(registro);
-        $("#collapseExample").collapse('toggle');
     },
 
     /**
      * Cancelar inclusão de novo registro
      */
-    cancelar: function () {
-        swal("Atenção!", "Deseja mesmo cancelar a inclusão de um novo registro?", "warning", {
+    cancelar: function (form) {
+        swal("Atenção!", "Deseja mesmo cancelar esta operação?", "warning", {
             dangerMode: true,
             buttons: {
                 cancel: "Não",
@@ -112,11 +132,15 @@ var tempo = {
         }).then((value) => {
             switch (value) {
                 case true:
-                    $("#data").val('');
-                    $("#inicio").val('');
-                    $("#projeto").val('');
-                    $("#atividade").val('');
-                    $("#collapseExample").collapse('toggle');
+                    fn.clearForm(form);
+                    switch (form) {
+                        case 'registro':
+                            $("#collapseExample").collapse('toggle');
+                            break;
+                        case 'edicao':
+                            $("#editModal").modal('hide');
+                            break;
+                    }
                     break;
                 default:
                     swal.close();
@@ -212,36 +236,51 @@ var tempo = {
      */
     editar: function (row, index) {
         lineIndex = index;
+        fn.setFieldVal('edicao_data', moment(row.data).format('YYYY-MM-DD'));
+        fn.setFieldVal('edicao_inicio', moment(row.inicio).format('HH:mm'));
+        fn.setFieldVal('edicao_fim', moment(row.fim).format('HH:mm'));
+        fn.setFieldVal('edicao_projeto', row.projeto);
+        fn.setFieldVal('edicao_agrupamento', row.agrupamento);
+        fn.setFieldVal('edicao_atividade', row.atividade);
         $("#editModal").modal('show');
-        $("#edicao_data").val(moment(row.data).format('YYYY-MM-DD'));
-        $("#edicao_projeto").val(row.projeto)
-        $("#edicao_inicio").val(moment(row.inicio).format('HH:mm'))
-        $("#edicao_fim").val(moment(row.fim).format("HH:mm"));
-        $("#edicao_atividade").val(row.atividade);
-        $('#edicao_projeto').trigger('change');
     },
 
     /**
      * Salvar alterações da edição do registro
      */
     salvar: function () {
-        let obj = {
-            data: $("#edicao_data").val(),
-            projeto: $("#edicao_projeto").val(),
-            inicio: this.toMoment($("#edicao_inicio").val()),
-            fim: this.toMoment($("#edicao_fim").val()),
-            atividade: $("#edicao_atividade").val(),
+        let form = 'edicao';
+        let formData = fn.getFormData(form);
+        if (fn.validateForm(form)) {
+            let registro = {
+                data: formData.edicao_data,
+                inicio: this.toMoment(formData.edicao_inicio),
+                fim: this.toMoment(formData.edicao_fim),
+                projeto: formData.edicao_projeto,
+                agrupamento: formData.edicao_agrupamento,
+                atividade: formData.edicao_atividade,
+            }
+            if (fn.maxDate(registro.data)) {
+                let duracao = this.calcularTotal(registro.inicio, registro.fim);
+                let total = moment.duration(duracao).asHours();
+                registro.decimal = fn.horasDecimais(total);
+                registro.total = ("00" + duracao._data.hours).slice(-2) + ":" + ("00" + duracao._data.minutes).slice(-2);
+                fn.clearForm(form);
+                this.atualizar(registro, lineIndex);
+                $("#editModal").modal('hide');
+                swal('Pronto!', 'Registro atualizado com sucesso!', 'success', {
+                    buttons: false,
+                    timer: 2000,
+                });
+            } else {
+                swal('Atenção!', 'A data de apontamento não pode ser superior à data atual.', 'warning');
+                fn.setFieldVal('edicao_data', '');
+                return false;
+            }
+        } else {
+            swal('Ops!', 'Um ou mais campos obrigatórios não foram preenchidos.', 'error');
+            return false;
         }
-        let duracao = this.calcularTotal(obj.inicio, obj.fim);
-        let total = moment.duration(duracao).asHours();
-        obj.decimal = fn.horasDecimais(total);
-        obj.total = ("00" + duracao._data.hours).slice(-2) + ":" + ("00" + duracao._data.minutes).slice(-2);
-        this.atualizar(obj, lineIndex);
-        $("#editModal").modal('hide');
-        swal('Pronto!', 'Registro atualizado com sucesso!', 'success', {
-            buttons: false,
-            timer: 2000,
-        });
     },
 
     /**
@@ -419,5 +458,215 @@ var fn = {
         splitTime[1] = ("00" + round).slice(-2);
         let newTime = splitTime.join(',');
         return newTime;
-    }
+    },
+
+    /**
+     * Recupera todos os dados de um formulário
+     * @returns {obj} dados : todos os dados do formulário
+     */
+    getFormData: function (form) {
+        var oDados = {}
+        $("input, select, textarea").each(function () {
+            if ($(this).data('form') == form) {
+                let oInput = $(this)
+                let sAttr = $(this).attr('id')
+                let uVal = $(this).val()
+                if (uVal != '') {
+                    switch (oInput[0].type) {
+
+                        // Campo do tipo Checkbox
+                        case 'checkbox':
+                            if ($(this).is(':checked')) {
+                                oDados[sAttr] = uVal
+                            }
+                            break;
+
+                        // Campo do tipo Radio
+                        case 'radio':
+                            if ($(this).is(':checked')) {
+                                oDados[$(this).attr('name')] = uVal
+                            }
+                            break;
+
+                        default:
+                            // Verifica se é um Select multiplo
+                            if (oInput[0].tagName == 'SELECT' && oInput[0].multiple == true) {
+                                oDados[sAttr] = uVal
+                                oDados[sAttr.substr(3)] = field.getMultiSelectText(sAttr)
+                            } else {
+                                // Verifica se é um campo Select
+                                if (oInput[0].tagName == 'SELECT') {
+                                    // Captura valor
+                                    oDados[sAttr] = !isNaN(uVal) ? parseInt(uVal) : uVal
+                                    if (sAttr.substr(0, 3) == "ID_") {
+                                        oDados[sAttr.substr(3)] = field.getSelectText(sAttr)
+                                    }
+                                } else {
+                                    // Verifica se é um campo decimal
+                                    if (!oInput.hasClass('decimal')) {
+                                        // Campos Padrão
+                                        oDados[sAttr] = uVal
+                                    } else {
+                                        // Campo Decimal
+                                        oDados[sAttr] = convertions.toFloat(uVal)
+                                    }
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+        })
+        // Retorna os dados do formulário
+        return oDados
+    },
+
+    /**
+     * Limpar Formulário
+     * @param {str} form : nome do formulário
+     */
+    clearForm: function (form) {
+        $("[data-form='" + form + "']").each(function () {
+            let oField = $(this)
+            let sType = oField[0].tagName
+            switch (sType) {
+                case 'INPUT':
+                    let sInputType = oField[0].attributes.type.nodeValue
+                    if (sInputType != 'radio' && sInputType != 'checkbox') {
+                        $(this).val(null)
+                        $(this).removeClass('border border-danger')
+                    } else {
+                        $(this).prop('checked', false)
+                    }
+                    break;
+                case 'SELECT':
+                    $(this).next('span').children('.selection').children('.select2-container--bootstrap-5 .select2-selection').css('border', '1px solid #ced4da');
+                    $(this).select2('val', '');
+                    break;
+                case 'SPAN':
+                    $(this).html(null)
+                    break;
+                case 'TEXTAREA':
+                    $(this).val(null)
+                    break;
+            }
+        });
+    },
+
+    /**
+     * Captura valor do campo ou elemento
+     * @param {str} field : nome do campo
+     * @returns
+     */
+    getFieldVal: function (field) {
+        let oField = $("#" + field)
+        let sType = oField[0].tagName
+        let val = null
+        switch (sType) {
+            case 'SPAN':
+                val = $("#" + field).html()
+                break;
+            default:
+                if ($("#" + field).hasClass('decimal')) {
+                    val = convertions.toFloat($("#" + field).val())
+                } else {
+                    if (sType == 'RADIO') {
+                        $("input[name='" + field + "']").val();
+                    } else {
+                        val = $("#" + field).val()
+                    }
+                }
+                break;
+        }
+        return val
+    },
+
+    /**
+     * Define valor do campo ou elemento
+     * @param {str} field : nome do campo
+     * @param {*} value : valor do campo
+     */
+    setFieldVal: function (field, value) {
+        let oField = $("#" + field)
+        let sType = oField[0].tagName
+        switch (sType) {
+
+            // Campo Padrão
+            case 'INPUT':
+                $("#" + field).val(value)
+                break;
+
+            // TextArea
+            case 'TEXTAREA':
+                $("#" + field).val(value)
+                break;
+
+            // Campo DropDown
+            case 'SELECT':
+                setTimeout(function () {
+                    $("#" + field).val(value)
+                    $("#" + field).trigger('change')
+                }, 100)
+                break;
+
+            // Elemento Span
+            case 'SPAN':
+                $("#" + field).html(value)
+                break;
+        }
+    },
+
+    maxDate(date) {
+        var dataAtual = moment();
+        var dataInformada = moment(date);
+        var diferenca = dataInformada.diff(dataAtual) // 1
+        return diferenca > 0 ? false : true;
+    },
+
+    /**
+     * Valida preenchimento de campos obrigatórios em formulários de subcadastro
+     * @param {str} form : nome do formulário a validar
+     */
+    validateForm: function (form) {
+        let val = false;
+        let campos = new Array()
+
+        // Percorre todos os campos com propriedade REQUIRED
+        $('[required]').each(function () {
+            // Verifica o campo e formulário a ser validado
+            if ($(this).attr('id') && $(this).data('form') == form) {
+                // Adiciona campo à lista dos obrigatórios
+                campos.push($(this).attr('id'))
+            }
+        })
+
+        // Percorre todos os campos identificados
+        for (c = 0; c < campos.length; c++) {
+            // Captura tipo do campo
+            let sType = $("#" + campos[c])[0].tagName
+            // Verifica se campo está em branco
+            if ($("#" + campos[c]).val() == "" || ($("#" + campos[c]).val() == null)) {
+                if (sType == 'SELECT') {
+                    $('#' + campos[c]).next('span').children('.selection').children('.select2-container--bootstrap-5 .select2-selection').css('border', '1px solid rgb(220,53,69)');
+                } else {
+                    $("#" + campos[c]).addClass('border border-danger')
+                    val = true
+                }
+                console.error($("#" + campos[c]).attr('id'))
+            } else {
+                if (sType == 'SELECT') {
+                    $('#' + campos[c]).next('span').children('.selection').children('.select2-container--bootstrap-5 .select2-selection').css('border', '1px solid #ced4da');
+                } else {
+                    $("#" + campos[c]).removeClass('border border-danger')
+                }
+            }
+        }
+
+        // Verifica se há campos obrigatórios não preenchidos
+        if (val == true) {
+            return false
+        } else {
+            return true
+        }
+    },
 }

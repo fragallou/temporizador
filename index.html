@@ -45,32 +45,35 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col col-6 text-start">
+            <div class="col mb-3 col-6 text-start">
                 <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" onclick="tempo.novo()">
+                    data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"
+                    onclick="tempo.novo()">
                     Novo
                 </button>
             </div>
-            <div class="col col-6 text-end">
+            <div class="col mb-3 col-6 text-end">
                 <div id="toolbar" class="toolbar"></div>
             </div>
         </div>
         <div class="collapse mt-3" id="collapseExample">
             <div class="card card-body shadow-sm p-4">
                 <div class="row">
-                    <div class="col col-2">
+                    <div class="col mb-3 col-2">
                         <label for="data">Data:</label>
-                        <input type="date" class="form-control" id="data" placeholder="00/00/0000" data-form="registro"
-                            disabled>
+                        <input type="date" class="form-control" id="data" placeholder="00/00/0000" data-form="registro" required>
                     </div>
-                    <div class="col col-2">
-                            <label for="inicio">Início:</label>
-                            <input type="text" class="form-control" id="inicio" placeholder="00:00"
-                                data-form="edicao">
-                        </div>
-                    <div class="col col-2">
+                    <div class="col mb-3 col-2">
+                        <label for="inicio">Início:</label>
+                        <input type="text" class="form-control" id="inicio" placeholder="00:00" data-form="registro" required>
+                    </div>
+                    <div class="col mb-3 col-2">
+                        <label for="fim">Fim:</label>
+                        <input type="text" class="form-control" id="fim" placeholder="00:00" data-form="registro">
+                    </div>
+                    <div class="col mb-3 col-3">
                         <label for="projeto">Projeto:</label>
-                        <select class="form-control" id="projeto" placeholder="Ex: Agrievo" data-form="registro">
+                        <select class="form-control" id="projeto" placeholder="Ex: Agrievo" data-form="registro" required>
                             <option value=""></option>
                             <option value="Agrievo">Agrievo</option>
                             <option value="Cargill">Cargill</option>
@@ -78,19 +81,23 @@
                             <option value="MaisDoc">MaisDoc</option>
                         </select>
                     </div>
-                    <div class="col col-6">
+                    <div class="col mb-3 col-3">
+                        <label for="agrupamento">Agrupamento / Módulo:</label>
+                        <input type="text" class="form-control" id="agrupamento" data-form="registro" required>
+                    </div>
+                    <div class="col mb-3 col-12">
                         <label for="atividade">Atividade:</label>
-                        <input type="text" class="form-control" id="atividade" data-form="registro">
+                        <input type="text" class="form-control" id="atividade" data-form="registro" required>
                     </div>
                     <div class="row mt-3">
-                        <div class="col col-1">
+                        <div class="col mb-3 col-1">
                             <button class="btn btn-primary" type="button" id="adicionar" onclick="tempo.adicionar();">
                                 Adicionar
                             </button>
                         </div>
-                        <div class="col col-1">
+                        <div class="col mb-3 col-1">
                             <button class="btn btn-outline-secondary" type="button" id="cancelar"
-                                onclick="tempo.cancelar();">
+                                onclick="tempo.cancelar('registro');">
                                 Cancelar
                             </button>
                         </div>
@@ -110,6 +117,7 @@
                             <th data-field="fim" data-formatter="formatter.hora">Fim</th>
                             <th data-field="total" data-formatter="formatter.total">Total</th>
                             <th data-field="projeto">Projeto</th>
+                            <th data-field="agrupamento">Agrupamento</th>
                             <th data-field="atividade">Atividade</th>
                             <th data-field="decimal" data-visible="false">Decimal</th>
                             <th data-field="acoes" data-formatter="formatter.acoes">Ações</th>
@@ -123,7 +131,8 @@
         <footer class="d-flex flex-wrap justify-content-between align-items-center pb-3 my-4">
             <p class="col-md-4 mb-0 text-muted">&copy; 2022 SimplePro Intelligence, Inc</p>
             <ul class="nav col-md-4 justify-content-end">
-                <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Design By <b>Fragallo, Uilian
+                <li class="nav-item"><a href="https://github.com/fragallou" target="_blank"
+                        class="nav-link px-2 text-muted">Design By <b>Fragallo, Uilian
                             C</b></a></li>
             </ul>
         </footer>
@@ -131,48 +140,52 @@
 
     <!-- Modal para Edição de Lançamento-->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="editModalLabel">Editar Lançamento</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body p-5">
                     <div class="row">
-                        <div class="mb-3 col col-3">
+                        <div class="col mb-3 col-2">
                             <label for="edicao_data">Data:</label>
                             <input type="date" class="form-control" id="edicao_data" placeholder="00/00/0000"
-                                data-form="edicao">
+                                data-form="edicao" required>
                         </div>
-                        <div class="mb-3 col col-5">
+                        <div class="col mb-3 col-2">
+                            <label for="edicao_inicio">Início:</label>
+                            <input type="text" class="form-control" id="edicao_inicio" placeholder="00:00"
+                                data-form="edicao" required>
+                        </div>
+                        <div class="col mb-3 col-2">
+                            <label for="edicao_fim">Fim:</label>
+                            <input type="text" class="form-control" id="edicao_fim" placeholder="00:00"
+                                data-form="edicao" required>
+                        </div>
+                        <div class="col mb-3 col-3">
                             <label for="edicao_projeto">Projeto:</label>
-                            <select class="form-control" id="edicao_projeto" placeholder="Ex: Agrievo" data-form="edicao">
+                            <select class="form-control" id="edicao_projeto" placeholder="Ex: Agrievo"
+                                data-form="edicao" required>
+                                <option value=""></option>
                                 <option value="Agrievo">Agrievo</option>
                                 <option value="Cargill">Cargill</option>
                                 <option value="Esatto">Esatto</option>
                                 <option value="MaisDoc">MaisDoc</option>
                             </select>
                         </div>
-                        <div class="mb-3 col col-2">
-                            <label for="edicao_inicio">Início:</label>
-                            <input type="text" class="form-control" id="edicao_inicio" placeholder="00:00"
-                                data-form="edicao">
+                        <div class="col mb-3 col-3">
+                            <label for="edicao_agrupamento">Agrupamento / Módulo:</label>
+                            <input type="text" class="form-control" id="edicao_agrupamento" data-form="edicao" required>
                         </div>
-                        <div class="mb-3 col col-2">
-                            <label for="edicao_fim">Fim:</label>
-                            <input type="text" class="form-control" id="edicao_fim" placeholder="00:00"
-                                data-form="edicao">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="mb-2 col col-12">
+                        <div class="col mb-3 col-12">
                             <label for="edicao_atividade">Atividade:</label>
-                            <input type="text" class="form-control" id="edicao_atividade" data-form="edicao">
+                            <input type="text" class="form-control" id="edicao_atividade" data-form="edicao" required>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-secondary" onclick="tempo.cancelar('edicao');">Cancelar</button>
                     <button type="button" class="btn btn-primary" onclick="tempo.salvar()">Atualizar</button>
                 </div>
             </div>
