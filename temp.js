@@ -191,6 +191,8 @@ var tempo = {
         row.inicio = moment();
         row.fim = null;
         row.total = null;
+        $(".search-input").val('');
+        $(".search-input").trigger("change");
         this.inserir(row);
     },
 
