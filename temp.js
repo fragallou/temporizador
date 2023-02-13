@@ -1,3 +1,5 @@
+const { ready } = require("jquery");
+
 var $table = $("#table").bootstrapTable();
 var lineIndex = 0;
 $(document).ready(function () {
@@ -670,5 +672,46 @@ var fn = {
         } else {
             return true
         }
+    },
+}
+
+/**
+ * Operação de Banco de Dados
+ */
+var crud = {
+
+    /**
+     * Apresentar todos os registros
+     */
+    all: function () {
+
+    },
+
+    /**
+     * Criar registro
+     */
+    create: function () {
+
+    },
+
+    /**
+     * Ler registro
+     */
+    read: function () {
+
+    },
+
+    /**
+     * Atualizar registro
+     */
+    update: function () {
+
+    },
+
+    /**
+     * Deletar registro
+     */
+    delete: function () {
+
     },
 }
