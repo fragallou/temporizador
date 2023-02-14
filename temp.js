@@ -1,5 +1,3 @@
-const { ready } = require("jquery");
-
 var $table = $("#table").bootstrapTable();
 var lineIndex = 0;
 $(document).ready(function () {
@@ -204,33 +202,6 @@ var tempo = {
     armazenar: function () {
         let dados = $table.bootstrapTable('getData');
         localStorage.setItem('temp', JSON.stringify(dados));
-    },
-
-    /**
-     * Eliminar todos os registros disponíveis
-     */
-    limpar: function () {
-        swal("Atenção!", "Deseja realmente remover todos os lançamentos?\nEsta operação é irreversível.", "warning", {
-            dangerMode: true,
-            buttons: {
-                cancel: "Cancelar",
-                confirm: {
-                    text: "Confirmar",
-                    value: true,
-                    visible: true,
-                    closeModal: true,
-                },
-            },
-        }).then((value) => {
-            switch (value) {
-                case true:
-                    localStorage.removeItem('temp');
-                    location.reload();
-                    break;
-                default:
-                    swal.close();
-            }
-        });
     },
 
     /**
