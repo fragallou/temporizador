@@ -370,13 +370,15 @@ function buttons() {
             text: 'Excel',
             icon: 'bi-file-earmark-excel-fill',
             event: function () {
-                $table.bootstrapTable('showColumn', 'decimal');
+                $table.bootstrapTable('showColumn', 'horas');
+                $table.bootstrapTable('hideColumn', 'acoes');
                 $table.tableExport({
                     format: 'xls',
                     filename: 'Apontamentos',
                     htmlContent: false,
                 });
-                $table.bootstrapTable('hideColumn', 'decimal');
+                $table.bootstrapTable('hideColumn', 'horas');
+                $table.bootstrapTable('showColumn', 'acoes');
             },
             attributes: {
                 title: 'Exportar para Excel'
