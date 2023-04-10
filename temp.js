@@ -373,6 +373,7 @@ function buttons() {
             text: 'Excel',
             icon: 'bi-file-earmark-excel-fill',
             event: function () {
+                $table.bootstrapTable('showColumn', 'tipo');
                 $table.bootstrapTable('showColumn', 'horas');
                 $table.bootstrapTable('hideColumn', 'acoes');
                 $table.tableExport({
@@ -380,6 +381,7 @@ function buttons() {
                     filename: 'Apontamentos',
                     htmlContent: false,
                 });
+                $table.bootstrapTable('hideColumn', 'tipo');
                 $table.bootstrapTable('hideColumn', 'horas');
                 $table.bootstrapTable('showColumn', 'acoes');
             },
@@ -392,6 +394,7 @@ function buttons() {
             icon: 'bi-filetype-csv',
             event: function () {
                 $table.bootstrapTable('refreshOptions', { pagination: false });
+                $table.bootstrapTable('showColumn', 'tipo');
                 $table.bootstrapTable('showColumn', 'horas');
                 $table.bootstrapTable('hideColumn', 'acoes');
                 $table.tableExport({
@@ -399,6 +402,7 @@ function buttons() {
                     filename: 'Apontamentos',
                     htmlContent: false,
                 });
+                $table.bootstrapTable('hideColumn', 'tipo');
                 $table.bootstrapTable('hideColumn', 'horas');
                 $table.bootstrapTable('showColumn', 'acoes');
                 $table.bootstrapTable('refreshOptions', { pagination: true });
