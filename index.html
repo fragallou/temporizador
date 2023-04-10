@@ -27,6 +27,11 @@
             line-height: 1.5;
             text-align: center;
         }
+
+        label {
+            margin-bottom: 3px;
+            font-size: 90%;
+        }
     </style>
 </head>
 
@@ -60,19 +65,31 @@
                 <div class="row">
                     <div class="col mb-3 col-2">
                         <label for="data">Data:</label>
-                        <input type="date" class="form-control" id="data" placeholder="00/00/0000" data-form="registro" required>
+                        <input type="date" class="form-control" id="data" placeholder="00/00/0000" data-form="registro"
+                            required>
                     </div>
                     <div class="col mb-3 col-2">
                         <label for="inicio">Início:</label>
-                        <input type="text" class="form-control" id="inicio" placeholder="00:00" data-form="registro" required>
+                        <input type="text" class="form-control" id="inicio" placeholder="00:00" data-form="registro"
+                            required>
                     </div>
                     <div class="col mb-3 col-2">
                         <label for="fim">Fim:</label>
                         <input type="text" class="form-control" id="fim" placeholder="00:00" data-form="registro">
                     </div>
-                    <div class="col mb-3 col-3">
+                    <div class="col mb-3 col-2">
+                        <label for="tipo">Tipo:</label>
+                        <select class="form-control" id="tipo" data-form="registro" required>
+                            <option value=""></option>
+                            <option value="Bug">Bug</option>
+                            <option value="Melhoria">Melhoria</option>
+                            <option value="Outro">Outro</option>
+                            <option value="Atualização">Atualização</option>
+                        </select>
+                    </div>
+                    <div class="col mb-3 col-2">
                         <label for="projeto">Projeto:</label>
-                        <select class="form-control" id="projeto" placeholder="Ex: Agrievo" data-form="registro" required>
+                        <select class="form-control" id="projeto" data-form="registro" required>
                             <option value=""></option>
                             <option value="Agrievo">Agrievo</option>
                             <option value="Cargill">Cargill</option>
@@ -80,7 +97,7 @@
                             <option value="MaisDoc">MaisDoc</option>
                         </select>
                     </div>
-                    <div class="col mb-3 col-3">
+                    <div class="col mb-3 col-2">
                         <label for="classe">Classe / Módulo:</label>
                         <input type="text" class="form-control" id="classe" data-form="registro" required>
                     </div>
@@ -108,8 +125,8 @@
     <div class="container">
         <div class="row mt-3">
             <div class="col">
-                        <div class="card border shadow-sm">
-                            <div class="card-body p-3">
+                <div class="card border shadow-sm">
+                    <div class="card-body p-3">
                         <table class="table" id="table">
                             <thead>
                                 <tr>
@@ -166,7 +183,17 @@
                             <input type="text" class="form-control" id="edicao_fim" placeholder="00:00"
                                 data-form="edicao" required>
                         </div>
-                        <div class="col mb-3 col-3">
+                        <div class="col mb-3 col-2">
+                            <label for="edicao_tipo">Tipo:</label>
+                            <select class="form-control" id="edicao_tipo" data-form="edicao" required>
+                                <option value=""></option>
+                                <option value="Bug">Bug</option>
+                                <option value="Melhoria">Melhoria</option>
+                                <option value="Outro">Outro</option>
+                                <option value="Atualização">Atualização</option>
+                            </select>
+                        </div>
+                        <div class="col mb-3 col-2">
                             <label for="edicao_projeto">Projeto:</label>
                             <select class="form-control" id="edicao_projeto" placeholder="Ex: Agrievo"
                                 data-form="edicao" required>
@@ -177,7 +204,7 @@
                                 <option value="MaisDoc">MaisDoc</option>
                             </select>
                         </div>
-                        <div class="col mb-3 col-3">
+                        <div class="col mb-3 col-2">
                             <label for="edicao_classe">Classe / Módulo:</label>
                             <input type="text" class="form-control" id="edicao_classe" data-form="edicao" required>
                         </div>
@@ -188,7 +215,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="tempo.cancelar('edicao');">Cancelar</button>
+                    <button type="button" class="btn btn-secondary"
+                        onclick="tempo.cancelar('edicao');">Cancelar</button>
                     <button type="button" class="btn btn-primary" onclick="tempo.salvar()">Atualizar</button>
                 </div>
             </div>

@@ -40,6 +40,7 @@ $(document).ready(function () {
         placeholder: 'Selecione',
     });
 
+    $("#tipo").val('');
     $("#projeto").val('');
 });
 
@@ -214,6 +215,7 @@ var tempo = {
         fn.setFieldVal('edicao_data', moment(row.data).format('YYYY-MM-DD'));
         fn.setFieldVal('edicao_inicio', moment(row.inicio).format('HH:mm'));
         fn.setFieldVal('edicao_fim', moment(row.fim).format('HH:mm'));
+        fn.setFieldVal('edicao_tipo', row.tipo);
         fn.setFieldVal('edicao_projeto', row.projeto);
         fn.setFieldVal('edicao_classe', row.classe);
         fn.setFieldVal('edicao_atividade', row.atividade);
@@ -231,6 +233,7 @@ var tempo = {
                 data: formData.edicao_data,
                 inicio: this.toMoment(formData.edicao_inicio),
                 fim: this.toMoment(formData.edicao_fim),
+                tipo: formData.edicao_tipo,
                 projeto: formData.edicao_projeto,
                 classe: formData.edicao_classe,
                 atividade: formData.edicao_atividade,
