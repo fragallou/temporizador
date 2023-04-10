@@ -21,7 +21,7 @@ $(document).ready(function () {
         showButtonText: false,
         showButtonIcons: true,
         buttonsClass: 'light',
-        classes: 'table table-bordered table-hover',
+        classes: 'table table-hover',
         buttons: buttons,
         pagination: true,
         pageSize: 15

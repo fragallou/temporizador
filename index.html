@@ -30,8 +30,8 @@
     </style>
 </head>
 
-<body>
-    <div class="container">
+<body class="bg-light">
+    <div class="container-fluid">
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
             <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
                 <span class="fs-4"><b>Temporizador</b></span>
@@ -42,7 +42,7 @@
             </ul>
         </header>
     </div>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col mb-3 col-6 text-start">
                 <button class="btn btn-primary" type="button" data-bs-toggle="collapse"
@@ -105,28 +105,32 @@
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row mt-3">
             <div class="col">
-                <table class="table" id="table">
-                    <thead>
-                        <tr>
-                            <th data-field="data" data-formatter="formatter.data">Data</th>
-                            <th data-field="inicio" data-formatter="formatter.hora">Início</th>
-                            <th data-field="fim" data-formatter="formatter.hora">Fim</th>
-                            <th data-field="total" data-formatter="formatter.total">Total</th>
-                            <th data-field="projeto">Projeto</th>
-                            <th data-field="classe">Classe</th>
-                            <th data-field="atividade">Atividade</th>
-                            <th data-field="horas" data-visible="false">Horas</th>
-                            <th data-field="acoes" data-formatter="formatter.acoes">Ações</th>
-                        </tr>
-                    </thead>
-                </table>
+                        <div class="card border shadow-sm">
+                            <div class="card-body p-3">
+                        <table class="table" id="table">
+                            <thead>
+                                <tr>
+                                    <th data-field="data" data-formatter="formatter.data">Data</th>
+                                    <th data-field="inicio" data-formatter="formatter.hora">Início</th>
+                                    <th data-field="fim" data-formatter="formatter.hora">Fim</th>
+                                    <th data-field="total" data-formatter="formatter.total">Total</th>
+                                    <th data-field="projeto">Projeto</th>
+                                    <th data-field="classe">Classe</th>
+                                    <th data-field="atividade">Atividade</th>
+                                    <th data-field="horas" data-visible="false">Horas</th>
+                                    <th data-field="acoes" data-formatter="formatter.acoes">Ações</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="container-fluid">
         <footer class="d-flex flex-wrap justify-content-between align-items-center pb-3 my-4">
             <p class="col-md-4 mb-0 text-muted">&copy; 2022 SimplePro Intelligence, Inc</p>
             <ul class="nav col-md-4 justify-content-end">
@@ -140,7 +144,7 @@
     <!-- Modal para Edição de Lançamento-->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content">
+            <div class="modal-content shadow">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="editModalLabel">Editar Lançamento</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
