@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title>Temporizador</title>
     <link rel="icon" type="image/x-icon" href="favicon.png">
     <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css">
@@ -63,21 +63,21 @@
         <div class="collapse mt-3" id="collapseExample">
             <div class="card card-body shadow-sm p-4">
                 <div class="row">
-                    <div class="col mb-3 col-2">
+                    <div class="col mb-3 col-12">
                         <label for="data">Data:</label>
                         <input type="date" class="form-control" id="data" placeholder="00/00/0000" data-form="registro"
                             required>
                     </div>
-                    <div class="col mb-3 col-2">
+                    <div class="col mb-3 col-6">
                         <label for="inicio">Início:</label>
                         <input type="text" class="form-control" id="inicio" placeholder="00:00" data-form="registro"
                             required>
                     </div>
-                    <div class="col mb-3 col-2">
+                    <div class="col mb-3 col-6">
                         <label for="fim">Fim:</label>
                         <input type="text" class="form-control" id="fim" placeholder="00:00" data-form="registro">
                     </div>
-                    <div class="col mb-3 col-2">
+                    <div class="col mb-3 col-6">
                         <label for="tipo">Tipo:</label>
                         <select class="form-control" id="tipo" data-form="registro" required>
                             <option value=""></option>
@@ -87,7 +87,7 @@
                             <option value="Outro">Outro</option>
                         </select>
                     </div>
-                    <div class="col mb-3 col-2">
+                    <div class="col mb-3 col-6">
                         <label for="projeto">Projeto:</label>
                         <select class="form-control" id="projeto" data-form="registro" required>
                             <option value=""></option>
@@ -97,7 +97,7 @@
                             <option value="MaisDoc">MaisDoc</option>
                         </select>
                     </div>
-                    <div class="col mb-3 col-2">
+                    <div class="col mb-3 col-12">
                         <label for="classe">Classe / Módulo:</label>
                         <input type="text" class="form-control" id="classe" data-form="registro" required>
                     </div>
@@ -106,12 +106,12 @@
                         <input type="text" class="form-control" id="atividade" data-form="registro" required>
                     </div>
                     <div class="row mt-3">
-                        <div class="col mb-3 col-1">
+                        <div class="col mb-3 col-md-1 col-xs-3">
                             <button class="btn btn-primary" type="button" id="adicionar" onclick="tempo.adicionar();">
                                 Adicionar
                             </button>
                         </div>
-                        <div class="col mb-3 col-1">
+                        <div class="col mb-3 col-md-1 col-xs-3">
                             <button class="btn btn-outline-secondary" type="button" id="cancelar"
                                 onclick="tempo.cancelar('registro');">
                                 Cancelar
@@ -174,17 +174,17 @@
                             <input type="date" class="form-control" id="edicao_data" placeholder="00/00/0000"
                                 data-form="edicao" required>
                         </div>
-                        <div class="col mb-3 col-2">
+                        <div class="col mb-3 col-12">
                             <label for="edicao_inicio">Início:</label>
                             <input type="text" class="form-control" id="edicao_inicio" placeholder="00:00"
                                 data-form="edicao" required>
                         </div>
-                        <div class="col mb-3 col-2">
+                        <div class="col mb-3 col-12">
                             <label for="edicao_fim">Fim:</label>
                             <input type="text" class="form-control" id="edicao_fim" placeholder="00:00"
                                 data-form="edicao" required>
                         </div>
-                        <div class="col mb-3 col-2">
+                        <div class="col mb-3 col-12">
                             <label for="edicao_tipo">Tipo:</label>
                             <select class="form-control" id="edicao_tipo" data-form="edicao" required>
                                 <option value=""></option>
@@ -194,7 +194,7 @@
                                 <option value="Outro">Outro</option>
                             </select>
                         </div>
-                        <div class="col mb-3 col-2">
+                        <div class="col mb-3 col-12">
                             <label for="edicao_projeto">Projeto:</label>
                             <select class="form-control" id="edicao_projeto" placeholder="Ex: Agrievo"
                                 data-form="edicao" required>
@@ -205,7 +205,7 @@
                                 <option value="MaisDoc">MaisDoc</option>
                             </select>
                         </div>
-                        <div class="col mb-3 col-2">
+                        <div class="col mb-3 col-12">
                             <label for="edicao_classe">Classe / Módulo:</label>
                             <input type="text" class="form-control" id="edicao_classe" data-form="edicao" required>
                         </div>

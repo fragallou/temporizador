@@ -15,8 +15,7 @@ $(document).ready(function () {
 
     // Instancia Tabela
     $table.bootstrapTable('refreshOptions', {
-        search: true,
-        searchAlign: 'right',
+        search: false,
         buttonsToolbar: '#toolbar',
         showButtonText: false,
         showButtonIcons: true,
